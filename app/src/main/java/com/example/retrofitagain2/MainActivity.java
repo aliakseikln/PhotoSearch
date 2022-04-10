@@ -1,13 +1,18 @@
 package com.example.retrofitagain2;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +27,26 @@ public class MainActivity extends AppCompatActivity {
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
     Presenter presenter;
-    String queryFromSearchView;
+    private static MainActivity instance;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         init();
 
-        apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                queryFromSearchView =  query;
-                presenter.searchViewTrySubmitQuery(MainActivity.this);
+                presenter.searchViewTrySubmitQuery( query);
 
                 return false;
             }
@@ -52,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     void init() {
         presenter = new Presenter();
+        presenter.attachView(MainActivity.this);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
@@ -59,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new PhotoAdapter(photoList);
         recyclerView.setAdapter(adapter);
         searchView = findViewById(R.id.searchView);
-    }
-
-    String getQueryFromSearchView() {
-        return queryFromSearchView;
     }
 
     void showUpdatedRecyclerView(List<Photo> updatedPhotoList) {
@@ -81,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void showToast(String toastText) {
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+    }
 
 
 }
