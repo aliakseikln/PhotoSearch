@@ -9,29 +9,30 @@ import java.util.List;
 public class Presenter {
 
     private final Model model = new Model();
-    private static MainActivity mainActivity;
+    private MainActivity activity;
     List<Photo> downloadedPhotoList = new ArrayList<>();
 
     public void attachView(MainActivity MainActivity) {
-        mainActivity = MainActivity;
+        activity = MainActivity;
+        model.presenter = this;
     }
 
     void searchViewTrySubmitQuery(String query) {
         if (query != null) {
-            mainActivity.showProgressBar();
-            mainActivity.showToast("Ищем фото по запросу: " + query);
-            model.loadDataFromFlickrByQuery(query);
+            activity.showProgressBar();
+            activity.showMessage("Ищем фото по запросу: " + query);
+            model.loadDataOfPhotosFromFlickrByQuery(query);
         }
     }
 
     void buttonDownloadHasClicked(Context context, String urlo, String photoTitle) {
 
         try {
-            model.downloadChosedPicture(context, urlo, photoTitle);
-            mainActivity.showToast("Image download started.");
+            model.downloadSelectedPhoto(context, urlo, photoTitle);
+            activity.showMessage("Image download started.");
         } catch (Exception e) {
             Log.e("TAG", "onFailedDownload: " + e.getMessage());
-            mainActivity.showToast("The author has not given permission to upload this photo.");
+            activity.showMessage("The author has not given permission to upload this photo.");
         }
 
     }
@@ -39,9 +40,9 @@ public class Presenter {
 
     void updateRecyclerView(List<Photo> photoList) {
         downloadedPhotoList.addAll(photoList);
-        mainActivity.showToast("Вот что мы нашли по вашему запросу");
-        mainActivity.hideProgressBar();
-        mainActivity.showUpdatedRecyclerView(downloadedPhotoList);
+        activity.showMessage("Вот что мы нашли по вашему запросу");
+        activity.hideProgressBar();
+        activity.showUpdatedRecyclerView(downloadedPhotoList);
 
     }
 
