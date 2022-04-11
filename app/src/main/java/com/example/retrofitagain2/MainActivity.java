@@ -1,13 +1,9 @@
 package com.example.retrofitagain2;
 
-import static androidx.core.app.ActivityCompat.requestPermissions;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,11 +15,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ApiInterfaceFlickr apiInterfaceFlickr;
     ProgressBar progressBar;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    PhotoAdapter adapter;
+    PhotoAdapter photoAdapter;
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
     Presenter presenter;
@@ -37,16 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         init();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.searchViewTrySubmitQuery( query);
+                presenter.searchViewTrySubmitQuery(query);
 
                 return false;
             }
@@ -67,15 +59,16 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PhotoAdapter(photoList);
-        recyclerView.setAdapter(adapter);
+        photoAdapter = new PhotoAdapter(photoList);
+        photoAdapter.presenter = presenter;
+        recyclerView.setAdapter(photoAdapter);
         searchView = findViewById(R.id.searchView);
     }
 
     void showUpdatedRecyclerView(List<Photo> updatedPhotoList) {
         photoList.clear();
         photoList.addAll(updatedPhotoList);
-        adapter.notifyDataSetChanged();
+        photoAdapter.notifyDataSetChanged();
 
     }
 
@@ -88,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void showToast(String toastText) {
+    void showMessage(String toastText) {
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 
