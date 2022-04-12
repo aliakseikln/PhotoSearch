@@ -14,7 +14,7 @@ public interface PresenterInterface {
 
     void handleDownloadButtonClick(Context context, String urlO, String photoTitle);
 
-    void handleSubmitSearchQuery(String query);
+    void handleSubmitSearchQuery(String query, String api_key);
 
     void attachView(MainActivity mainActivity);
 

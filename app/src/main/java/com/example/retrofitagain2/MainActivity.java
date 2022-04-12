@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
     Presenter presenter;
+    String apiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.handleSubmitSearchQuery(query);
+                presenter.handleSubmitSearchQuery(query,apiKey);
 
                 return false;
             }
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
         photoAdapter.presenter = presenter;
         recyclerView.setAdapter(photoAdapter);
         searchView = findViewById(R.id.searchView);
+        apiKey = getResources().getString(R.string.my_flickr_api_key);
     }
 
     @SuppressLint("NotifyDataSetChanged")

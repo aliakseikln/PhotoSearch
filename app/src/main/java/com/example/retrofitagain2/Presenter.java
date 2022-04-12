@@ -19,11 +19,11 @@ public class Presenter implements PresenterInterface {
         photosService.presenter = this;
     }
 
-    public void handleSubmitSearchQuery(String query) {
+    public void handleSubmitSearchQuery(String query, String api_key) {
         if (query != null) {
             activity.showProgressBar();
             activity.showToast("Ищем фото по запросу: " + query);
-            photosService.loadDataOfPhotosByQuery(query);
+            photosService.loadDataOfPhotosByQuery(query,api_key);
         }
     }
 

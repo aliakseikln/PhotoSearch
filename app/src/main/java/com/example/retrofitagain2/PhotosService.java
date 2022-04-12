@@ -26,13 +26,13 @@ public class PhotosService implements ModelInterface {
     List<Photo> photoListFromResponse = new ArrayList<Photo>();
     Presenter presenter;
 
-    public void loadDataOfPhotosByQuery(String query) {
+    public void loadDataOfPhotosByQuery(String query, String api_key) {
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
-        Call<Matreshka> callGetAll = apiInterfaceFlickr.getAllBySearch(query);
-        callGetAll.enqueue(new Callback<Matreshka>() {
+        Call<BodyResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query,api_key);
+        callGetAll.enqueue(new Callback<BodyResponse>() {
 
             @Override
-            public void onResponse(@NonNull Call<Matreshka> call, @NonNull Response<Matreshka> response) {
+            public void onResponse(@NonNull Call<BodyResponse> call, @NonNull Response<BodyResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e(TAG, "onResponse: " + response.body());
                     photoListFromResponse.clear();
@@ -43,7 +43,7 @@ public class PhotosService implements ModelInterface {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Matreshka> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<BodyResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
             }
         });
