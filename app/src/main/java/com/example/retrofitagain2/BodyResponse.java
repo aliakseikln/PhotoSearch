@@ -3,7 +3,7 @@ package com.example.retrofitagain2;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Matreshka {
+public class BodyResponse {
 
     @SerializedName("photos")
     @Expose
@@ -30,7 +30,7 @@ public class Matreshka {
 
     @Override
     public String toString() {
-        return "Matreshka{" +
+        return "BodyResponse{" +
                 "photos=" + photos +
                 ", stat='" + stat + '\'' +
                 '}';

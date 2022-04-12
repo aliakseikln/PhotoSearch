@@ -38,7 +38,7 @@
             android:foreground="@drawable/ic_baseline_download_24"
             android:foregroundGravity="center|right"
             android:gravity="center|start"
-            android:text="Download"
+            android:text="Загрузить"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textSize="10sp"
             android:typeface="sans"
