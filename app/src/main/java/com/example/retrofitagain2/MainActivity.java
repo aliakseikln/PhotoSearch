@@ -1,19 +1,22 @@
 package com.example.retrofitagain2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.retrofitagain2.interfaces.ViewInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewInterface {
 
     ProgressBar progressBar;
     RecyclerView recyclerView;
@@ -22,11 +25,6 @@ public class MainActivity extends AppCompatActivity {
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
     Presenter presenter;
-    private static MainActivity instance;
-
-    public static MainActivity getInstance() {
-        return instance;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.searchViewTrySubmitQuery(query);
+                presenter.handleSubmitSearchQuery(query);
 
                 return false;
             }
@@ -65,23 +63,24 @@ public class MainActivity extends AppCompatActivity {
         searchView = findViewById(R.id.searchView);
     }
 
-    void showUpdatedRecyclerView(List<Photo> updatedPhotoList) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void showRecyclerView(List<Photo> updatedPhotoList) {
         photoList.clear();
         photoList.addAll(updatedPhotoList);
         photoAdapter.notifyDataSetChanged();
 
     }
 
-    void showProgressBar() {
+    public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    void hideProgressBar() {
+    public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
 
     }
 
-    void showMessage(String toastText) {
+    public void showToast(String toastText) {
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 

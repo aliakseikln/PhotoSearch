@@ -8,6 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
+import com.example.retrofitagain2.interfaces.ModelInterface;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +19,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Model {
+public class PhotosService implements ModelInterface {
 
     private static final String TAG = "MainActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
     List<Photo> photoListFromResponse = new ArrayList<Photo>();
     Presenter presenter;
 
-    void loadDataOfPhotosFromFlickrByQuery(String query) {
+    public void loadDataOfPhotosByQuery(String query) {
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         Call<Matreshka> callGetAll = apiInterfaceFlickr.getAllBySearch(query);
         callGetAll.enqueue(new Callback<Matreshka>() {
@@ -34,20 +37,20 @@ public class Model {
                     Log.e(TAG, "onResponse: " + response.body());
                     photoListFromResponse.clear();
                     photoListFromResponse.addAll(response.body().getPhotos().getPhoto());
-                    presenter.updateRecyclerView(photoListFromResponse);
+                    presenter.handleRecyclerView(photoListFromResponse);
 
                 }
             }
 
             @Override
-            public void onFailure(Call<Matreshka> call, Throwable t) {
+            public void onFailure(@NonNull Call<Matreshka> call, @NonNull Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
             }
         });
 
     }
 
-    void downloadSelectedPhoto(Context context, String urlO, String photoTitle) {
+    public void downloadSelectedPhoto(Context context, String urlO, String photoTitle) {
 
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri downloadUri = Uri.parse(urlO);

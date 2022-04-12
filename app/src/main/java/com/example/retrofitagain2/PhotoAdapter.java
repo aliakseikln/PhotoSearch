@@ -58,7 +58,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
                             public void onClick(DialogInterface dialog, int which) {
 
-                                presenter.buttonDownloadHasClicked(context, originalSizeOfPhotoUrl, photoTitle);
+                                presenter.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
 
                             }
                         })
