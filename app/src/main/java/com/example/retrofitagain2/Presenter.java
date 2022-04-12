@@ -3,48 +3,46 @@ package com.example.retrofitagain2;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.retrofitagain2.interfaces.PresenterInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Presenter implements PresenterInterface {
+public class Presenter {
 
-    private final PhotosService photosService = new PhotosService();
-    List<Photo> downloadedPhotoList = new ArrayList<>();
+    private final Model model = new Model();
     private MainActivity activity;
+    List<Photo> downloadedPhotoList = new ArrayList<>();
 
-    public void attachView(MainActivity mainActivity) {
-        activity = mainActivity;
-        photosService.presenter = this;
+    public void attachView(MainActivity MainActivity) {
+        activity = MainActivity;
+        model.presenter = this;
     }
 
-    public void handleSubmitSearchQuery(String query, String api_key) {
+    void searchViewTrySubmitQuery(String query) {
         if (query != null) {
             activity.showProgressBar();
-            activity.showToast("Ищем фото по запросу: " + query);
-            photosService.loadDataOfPhotosByQuery(query,api_key);
+            activity.showMessage("Ищем фото по запросу: " + query);
+            model.loadDataOfPhotosFromFlickrByQuery(query);
         }
     }
 
-    public void handleDownloadButtonClick(Context context, String urlO, String photoTitle) {
+    void buttonDownloadHasClicked(Context context, String urlo, String photoTitle) {
 
         try {
-            photosService.downloadSelectedPhoto(context, urlO, photoTitle);
-            activity.showToast("Загрузка изображения началась.");
+            model.downloadSelectedPhoto(context, urlo, photoTitle);
+            activity.showMessage("Image download started.");
         } catch (Exception e) {
             Log.e("TAG", "onFailedDownload: " + e.getMessage());
-            activity.showToast("Автор не дал разрешения на загрузку фото.");
+            activity.showMessage("The author has not given permission to upload this photo.");
         }
 
     }
 
-    public void handleRecyclerView(List<Photo> photoList) {
-        downloadedPhotoList.clear();
+
+    void updateRecyclerView(List<Photo> photoList) {
         downloadedPhotoList.addAll(photoList);
-        activity.showToast("Вот что мы нашли по вашему запросу");
+        activity.showMessage("Вот что мы нашли по вашему запросу");
         activity.hideProgressBar();
-        activity.showRecyclerView(downloadedPhotoList);
+        activity.showUpdatedRecyclerView(downloadedPhotoList);
 
     }
 

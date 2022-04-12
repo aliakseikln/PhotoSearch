@@ -1,22 +1,19 @@
 package com.example.retrofitagain2;
 
-import android.annotation.SuppressLint;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.retrofitagain2.interfaces.ViewInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ViewInterface {
+public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     RecyclerView recyclerView;
@@ -25,7 +22,11 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
     Presenter presenter;
-    String apiKey;
+    private static MainActivity instance;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.handleSubmitSearchQuery(query,apiKey);
+                presenter.searchViewTrySubmitQuery(query);
 
                 return false;
             }
@@ -62,27 +63,25 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
         photoAdapter.presenter = presenter;
         recyclerView.setAdapter(photoAdapter);
         searchView = findViewById(R.id.searchView);
-        apiKey = getResources().getString(R.string.my_flickr_api_key);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void showRecyclerView(List<Photo> updatedPhotoList) {
+    void showUpdatedRecyclerView(List<Photo> updatedPhotoList) {
         photoList.clear();
         photoList.addAll(updatedPhotoList);
         photoAdapter.notifyDataSetChanged();
 
     }
 
-    public void showProgressBar() {
+    void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar() {
+    void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
 
     }
 
-    public void showToast(String toastText) {
+    void showMessage(String toastText) {
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 

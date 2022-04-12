@@ -8,9 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
-import com.example.retrofitagain2.interfaces.ModelInterface;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,38 +16,38 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosService implements ModelInterface {
+public class Model {
 
     private static final String TAG = "MainActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
     List<Photo> photoListFromResponse = new ArrayList<Photo>();
     Presenter presenter;
 
-    public void loadDataOfPhotosByQuery(String query, String api_key) {
+    void loadDataOfPhotosFromFlickrByQuery(String query) {
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
-        Call<BodyResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query,api_key);
-        callGetAll.enqueue(new Callback<BodyResponse>() {
+        Call<Matreshka> callGetAll = apiInterfaceFlickr.getAllBySearch(query);
+        callGetAll.enqueue(new Callback<Matreshka>() {
 
             @Override
-            public void onResponse(@NonNull Call<BodyResponse> call, @NonNull Response<BodyResponse> response) {
+            public void onResponse(@NonNull Call<Matreshka> call, @NonNull Response<Matreshka> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e(TAG, "onResponse: " + response.body());
                     photoListFromResponse.clear();
                     photoListFromResponse.addAll(response.body().getPhotos().getPhoto());
-                    presenter.handleRecyclerView(photoListFromResponse);
+                    presenter.updateRecyclerView(photoListFromResponse);
 
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<BodyResponse> call, @NonNull Throwable t) {
+            public void onFailure(Call<Matreshka> call, Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
             }
         });
 
     }
 
-    public void downloadSelectedPhoto(Context context, String urlO, String photoTitle) {
+    void downloadSelectedPhoto(Context context, String urlO, String photoTitle) {
 
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri downloadUri = Uri.parse(urlO);
