@@ -4,7 +4,7 @@ import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface ViewInterface {
+public interface PhotoSearchView {
 
 
     void hideProgressBar();

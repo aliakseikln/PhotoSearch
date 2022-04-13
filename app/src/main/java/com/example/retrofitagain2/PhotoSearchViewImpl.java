@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.interfaces.ViewInterface;
+import com.example.retrofitagain2.interfaces.PhotoSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ViewInterface {
+public class PhotoSearchViewImpl extends AppCompatActivity implements PhotoSearchView {
 
     ProgressBar progressBar;
     RecyclerView recyclerView;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
     PhotoAdapter photoAdapter;
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
-    Presenter presenter;
+    PhotoListPresenterImpl photoListPresenterImpl;
     String apiKey;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.handleSubmitSearchQuery(query,apiKey);
+                photoListPresenterImpl.handleSubmitSearchQuery(query,apiKey);
 
                 return false;
             }
@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity implements ViewInterface {
     }
 
     void init() {
-        presenter = new Presenter();
-        presenter.attachView(MainActivity.this);
+        photoListPresenterImpl = new PhotoListPresenterImpl();
+        photoListPresenterImpl.attachView(PhotoSearchViewImpl.this);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         photoAdapter = new PhotoAdapter(photoList);
-        photoAdapter.presenter = presenter;
+        photoAdapter.photoListPresenterImpl = photoListPresenterImpl;
         recyclerView.setAdapter(photoAdapter);
         searchView = findViewById(R.id.searchView);
         apiKey = getResources().getString(R.string.my_flickr_api_key);

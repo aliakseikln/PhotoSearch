@@ -22,7 +22,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     private final List<Photo> photoList;
     Context context;
-    Presenter presenter;
+    PhotoListPresenterImpl photoListPresenterImpl;
     String originalSizeOfPhotoUrl;
     String photoTitle;
 
@@ -58,7 +58,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
                             public void onClick(DialogInterface dialog, int which) {
 
-                                presenter.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
+                                photoListPresenterImpl.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
 
                             }
                         })

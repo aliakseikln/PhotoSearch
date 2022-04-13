@@ -1,14 +1,13 @@
 package com.example.retrofitagain2.interfaces;
 
-import android.app.Activity;
 import android.content.Context;
 
-import com.example.retrofitagain2.MainActivity;
+import com.example.retrofitagain2.PhotoSearchViewImpl;
 import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface PresenterInterface {
+public interface PhotoListPresenter {
 
     void handleRecyclerView(List<Photo> photoList);
 
@@ -16,6 +15,6 @@ public interface PresenterInterface {
 
     void handleSubmitSearchQuery(String query, String api_key);
 
-    void attachView(MainActivity mainActivity);
+    void attachView(PhotoSearchViewImpl photoSearchViewImpl);
 
 }
