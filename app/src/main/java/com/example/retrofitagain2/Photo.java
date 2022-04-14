@@ -146,7 +146,6 @@ public class Photo {
     public void setWidthS(String widthS) {
         this.widthS = widthS;
     }
-///////////////////////////////////////////////////////////////////////////
 
     public String getUrlO() {
         return urlO;
@@ -189,5 +188,6 @@ public class Photo {
                 ", widthS='" + widthS + '\'' +
                 '}';
     }
+
 }
 

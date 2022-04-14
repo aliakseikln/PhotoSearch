@@ -1,35 +1,38 @@
 package com.example.retrofitagain2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.retrofitagain2.interfaces.PhotoListPresenter;
+import com.example.retrofitagain2.interfaces.PhotoListService;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListPresenterImpl implements PhotoListPresenter {
 
-    private final PhotosServiceImpl photosServiceImpl = new PhotosServiceImpl();
+    private final PhotoListService photosService = new PhotoListServiceImpl();
     List<Photo> downloadedPhotoList = new ArrayList<>();
-    private PhotoSearchViewImpl activity;
+    private PhotoListActivityImpl activity;
 
-    public void attachView(PhotoSearchViewImpl photoSearchViewImpl) {
-        activity = photoSearchViewImpl;
-        photosServiceImpl.photoListPresenterImpl = this;
+    public void attachView(PhotoListActivityImpl photoListActivity) {
+        activity = photoListActivity;
+        photosService.setPhotoListService(this);
     }
 
-    public void handleSubmitSearchQuery(String query, String api_key) {
+    public void handleSubmitSearchQuery(String query) {
         if (query != null) {
             activity.showProgressBar();
             activity.showToast("Ищем фото по запросу: " + query);
-            photosServiceImpl.loadDataOfPhotosByQuery(query,api_key);
+            photosService.loadDataOfPhotosByQuery(query, activity);
         }
     }
 
     public void handleDownloadButtonClick(Context context, String urlO, String photoTitle) {
 
         try {
-            photosServiceImpl.downloadSelectedPhoto(context, urlO, photoTitle);
+            photosService.downloadSelectedPhoto(context, urlO, photoTitle);
             activity.showToast("Загрузка изображения началась.");
         } catch (Exception e) {
             Log.e("TAG", "onFailedDownload: " + e.getMessage());
@@ -45,6 +48,10 @@ public class PhotoListPresenterImpl implements PhotoListPresenter {
         activity.hideProgressBar();
         activity.showRecyclerView(downloadedPhotoList);
 
+    }
+
+    void handleImageButtonClick(Bitmap bitmap) {
+        activity.showAnotherActivity(bitmap);
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.retrofitagain2;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
@@ -9,7 +10,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
-import com.example.retrofitagain2.interfaces.PhotosServiceModel;
+import com.example.retrofitagain2.interfaces.PhotoListPresenter;
+import com.example.retrofitagain2.interfaces.PhotoListService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,16 +21,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosServiceImpl implements PhotosServiceModel {
+public class PhotoListServiceImpl implements PhotoListService {
 
-    private static final String TAG = "PhotoSearchViewImpl";
+    private static final String TAG = "PhotoListActivityImpl";
     ApiInterfaceFlickr apiInterfaceFlickr;
     List<Photo> photoListFromResponse = new ArrayList<Photo>();
-    PhotoListPresenterImpl photoListPresenterImpl;
+    PhotoListPresenter listener;
 
-    public void loadDataOfPhotosByQuery(String query, String api_key) {
+    @Override
+    public void setPhotoListService(PhotoListPresenter listener) {
+        this.listener = listener;
+    }
+
+    public void loadDataOfPhotosByQuery(String query, Activity activity) {
+        String apiKey = activity.getResources().getString(R.string.my_flickr_api_key);
+
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
-        Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query,api_key);
+        Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query, apiKey);
         callGetAll.enqueue(new Callback<PhotosResponse>() {
 
             @Override
@@ -37,7 +46,7 @@ public class PhotosServiceImpl implements PhotosServiceModel {
                     Log.e(TAG, "onResponse: " + response.body());
                     photoListFromResponse.clear();
                     photoListFromResponse.addAll(response.body().getPhotos().getPhoto());
-                    photoListPresenterImpl.handleRecyclerView(photoListFromResponse);
+                    listener.handleRecyclerView(photoListFromResponse);
 
                 }
             }

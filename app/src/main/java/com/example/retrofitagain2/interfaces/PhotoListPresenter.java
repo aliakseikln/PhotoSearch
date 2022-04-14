@@ -2,7 +2,7 @@ package com.example.retrofitagain2.interfaces;
 
 import android.content.Context;
 
-import com.example.retrofitagain2.PhotoSearchViewImpl;
+import com.example.retrofitagain2.PhotoListActivityImpl;
 import com.example.retrofitagain2.Photo;
 
 import java.util.List;
@@ -13,8 +13,8 @@ public interface PhotoListPresenter {
 
     void handleDownloadButtonClick(Context context, String urlO, String photoTitle);
 
-    void handleSubmitSearchQuery(String query, String api_key);
+    void handleSubmitSearchQuery(String query);
 
-    void attachView(PhotoSearchViewImpl photoSearchViewImpl);
+    void attachView(PhotoListActivityImpl photoListActivityImpl);
 
 }

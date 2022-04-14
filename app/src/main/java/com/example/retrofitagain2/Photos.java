@@ -71,6 +71,8 @@ public class Photos {
                 ", total=" + total +
                 ", photo=" + photo +
                 '}';
+
     }
+
 }
 

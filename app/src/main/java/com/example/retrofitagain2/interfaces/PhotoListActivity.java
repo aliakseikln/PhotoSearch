@@ -1,11 +1,12 @@
 package com.example.retrofitagain2.interfaces;
 
+import android.graphics.Bitmap;
+
 import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface PhotoSearchView {
-
+public interface PhotoListActivity {
 
     void hideProgressBar();
 
@@ -15,9 +16,6 @@ public interface PhotoSearchView {
 
     void showRecyclerView(List<Photo> listOfPhotos);
 
-
-
-
-
+    void showAnotherActivity(Bitmap bitmap);
 
 }
