@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PhotoActivity extends AppCompatActivity {
+public class FullScreenPhotoActivity extends AppCompatActivity {
 
     ImageView photoImageView;
 
@@ -20,7 +20,5 @@ public class PhotoActivity extends AppCompatActivity {
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         photoImageView.setImageBitmap(bitmap);
-
     }
-
 }

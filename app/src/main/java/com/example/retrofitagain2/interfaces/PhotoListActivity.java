@@ -16,6 +16,6 @@ public interface PhotoListActivity {
 
     void showRecyclerView(List<Photo> listOfPhotos);
 
-    void showAnotherActivity(Bitmap bitmap);
+    void showFullScreenPhotoActivity(Bitmap bitmap);
 
 }

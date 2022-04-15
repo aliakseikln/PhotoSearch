@@ -1,5 +1,7 @@
 package com.example.retrofitagain2;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -62,6 +64,7 @@ public class Photos {
         this.photo = photo;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Photos{" +
@@ -71,8 +74,6 @@ public class Photos {
                 ", total=" + total +
                 ", photo=" + photo +
                 '}';
-
     }
-
 }
 

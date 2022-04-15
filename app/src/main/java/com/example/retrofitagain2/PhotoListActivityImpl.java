@@ -14,19 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitagain2.interfaces.PhotoListActivity;
+import com.example.retrofitagain2.interfaces.PhotoListPresenter;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListActivityImpl extends AppCompatActivity implements PhotoListActivity {
+
     ProgressBar progressBar;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    RecyclerViewAdapter recyclerViewAdapter;
+    PhotoListRecyclerViewAdapter photoListRecyclerViewAdapter;
     List<Photo> photoList = new ArrayList<>();
     SearchView searchView;
-    PhotoListPresenterImpl photoListPresenter;
+    PhotoListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,63 +37,53 @@ public class PhotoListActivityImpl extends AppCompatActivity implements PhotoLis
         init();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
-                photoListPresenter.handleSubmitSearchQuery(query);
-
+                presenter.handleSubmitSearchQuery(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
-
         });
-
     }
 
     void init() {
-        photoListPresenter = new PhotoListPresenterImpl();
-        photoListPresenter.attachView(PhotoListActivityImpl.this);
+        presenter = new PhotoListPresenterImpl();
+        presenter.attachView(this);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewAdapter = new RecyclerViewAdapter(photoList);
-        recyclerViewAdapter.photoListPresenter = photoListPresenter;
-        recyclerView.setAdapter(recyclerViewAdapter);
+        photoListRecyclerViewAdapter = new PhotoListRecyclerViewAdapter(photoList);
+        photoListRecyclerViewAdapter.presenter = presenter;
+        recyclerView.setAdapter(photoListRecyclerViewAdapter);
         searchView = findViewById(R.id.searchView);
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void showRecyclerView(List<Photo> updatedPhotoList) {
         photoList.clear();
         photoList.addAll(updatedPhotoList);
-        recyclerViewAdapter.notifyDataSetChanged();
-
+        photoListRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
-
     }
 
     public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
-
     }
 
     public void showToast(String toastText) {
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
-
     }
 
-    public void showAnotherActivity(Bitmap bitmap) {
-        Intent intent = new Intent(PhotoListActivityImpl.this, com.example.retrofitagain2.PhotoActivity.class);
+    public void showFullScreenPhotoActivity(Bitmap bitmap) {
+        Intent intent = new Intent(PhotoListActivityImpl.this, FullScreenPhotoActivity.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -99,7 +91,5 @@ public class PhotoListActivityImpl extends AppCompatActivity implements PhotoLis
 
         intent.putExtra("image", byteArray);
         startActivity(intent);
-
     }
-
 }

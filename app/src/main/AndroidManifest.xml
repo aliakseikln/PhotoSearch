@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetrofitAgain2">
         <activity
-            android:name=".PhotoActivity"
+            android:name=".FullScreenPhotoActivity"
             android:exported="false" />
         <activity
             android:name=".PhotoListActivityImpl"

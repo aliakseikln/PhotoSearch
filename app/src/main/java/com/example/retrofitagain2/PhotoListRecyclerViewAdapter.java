@@ -17,31 +17,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.retrofitagain2.interfaces.PhotoListPresenter;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Photo> photoList;
     Context context;
-    PhotoListPresenterImpl photoListPresenter;
+    PhotoListPresenter presenter;
     String originalSizeOfPhotoUrl;
     String photoTitle;
 
-    public RecyclerViewAdapter(List<Photo> photoList) {
+    public PhotoListRecyclerViewAdapter(List<Photo> photoList) {
         this.photoList = photoList;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PhotoListRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
+    public void onBindViewHolder(@NonNull PhotoListRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         context = holder.itemView.getContext();
         holder.tvTitle.setText(photoList.get(position).getTitle());
         Glide.with(context).load(photoList.get(position).getUrlS()).into(holder.imageViewSizeS);
@@ -59,13 +59,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .setNegativeButton("Да", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-
-                                photoListPresenter.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
-
+                                presenter.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
                             }
                         })
                         .show();
-
             }
         });
 
@@ -73,17 +70,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.imageViewSizeS.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     holder.imageViewSizeS.setDrawingCacheEnabled(true);
                     BitmapDrawable drawable = (BitmapDrawable) holder.imageViewSizeS.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
-
-                    photoListPresenter.handleImageButtonClick(bitmap);
-
+                    presenter.handleImageButtonClick(bitmap);
                 }
             });
         }
-
     }
 
     @Override
@@ -91,7 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return photoList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
         ImageView imageViewSizeS;
@@ -103,7 +96,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvTitle = itemView.findViewById(R.id.tvTitle);
             imageViewSizeS = itemView.findViewById(R.id.photoImageView);
             buttonDownload = itemView.findViewById(R.id.buttonDownload);
-
         }
     }
 }
