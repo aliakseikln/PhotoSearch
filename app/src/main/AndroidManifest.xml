@@ -18,7 +18,7 @@
             android:name=".FullScreenPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".PhotoListActivityImpl"
+            android:name=".PhotoListViewImpl"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

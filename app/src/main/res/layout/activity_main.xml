@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#97BB86FC"
-    tools:context=".PhotoListActivityImpl">
+    android:background="#3A2962FF"
+    tools:context=".PhotoListViewImpl">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
