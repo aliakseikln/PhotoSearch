@@ -23,13 +23,13 @@ import retrofit2.Response;
 
 public class PhotoListServiceImpl implements PhotoListService {
 
-    private static final String TAG = "PhotoListActivityImpl";
+    private static final String TAG = "PhotoListViewImpl";
     ApiInterfaceFlickr apiInterfaceFlickr;
     List<Photo> photoListFromResponse = new ArrayList<Photo>();
     PhotoServiceListener listener;
 
     public void setListener(PhotoServiceListener listener) {
-        this.listener = (PhotoServiceListener) listener;
+        this.listener = listener;
     }
 
     public void loadDataOfPhotosByQuery(String query, @NonNull Context context) {

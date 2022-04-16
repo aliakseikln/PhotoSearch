@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.example.retrofitagain2.interfaces.PhotoListActivity;
+import com.example.retrofitagain2.interfaces.PhotoListView;
 import com.example.retrofitagain2.interfaces.PhotoListPresenter;
 import com.example.retrofitagain2.interfaces.PhotoListService;
 import com.example.retrofitagain2.interfaces.PhotoServiceListener;
@@ -16,10 +16,9 @@ import java.util.List;
 public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceListener {
 
     private final PhotoListService photosService = new PhotoListServiceImpl();
-    List<Photo> downloadedPhotoList = new ArrayList<>();
-    private PhotoListActivity view;
+    private PhotoListView view;
 
-    public void attachView(PhotoListActivity photoListActivity) {
+    public void attachView(PhotoListView photoListActivity) {
         view = photoListActivity;
         photosService.setListener(this);
     }
@@ -43,14 +42,13 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceL
     }
 
     public void onPhotosServiceSuccess(List<Photo> photoListResponse) {
-        downloadedPhotoList.clear();
-        downloadedPhotoList.addAll(photoListResponse);
         view.showToast("Вот что мы нашли по вашему запросу");
         view.hideProgressBar();
-        view.showRecyclerView(downloadedPhotoList);
+        view.showRecyclerView(photoListResponse);
     }
 
     public void handleImageButtonClick(Bitmap bitmap) {
+        view.hideFocusSearchView();
         view.showFullScreenPhotoActivity(bitmap);
     }
 }

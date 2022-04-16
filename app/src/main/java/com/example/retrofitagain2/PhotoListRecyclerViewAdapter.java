@@ -19,18 +19,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.retrofitagain2.interfaces.PhotoListPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Photo> photoList;
+    private final List<Photo> photoList = new ArrayList<>();
     Context context;
     PhotoListPresenter presenter;
     String originalSizeOfPhotoUrl;
     String photoTitle;
 
-    public PhotoListRecyclerViewAdapter(List<Photo> photoList) {
-        this.photoList = photoList;
+    @SuppressLint("NotifyDataSetChanged")
+    void updatePhotosList(List<Photo> updatedPhotoList) {
+        photoList.clear();
+        photoList.addAll(updatedPhotoList);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -44,7 +48,7 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
     public void onBindViewHolder(@NonNull PhotoListRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         context = holder.itemView.getContext();
         holder.tvTitle.setText(photoList.get(position).getTitle());
-        Glide.with(context).load(photoList.get(position).getUrlS()).into(holder.imageViewSizeS);
+        Glide.with(context).load(photoList.get(position).getUrlS()).into(holder.photoImageView);
 
         holder.buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +70,12 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
             }
         });
 
-        if (holder.imageViewSizeS != null) {
-            holder.imageViewSizeS.setOnClickListener(new View.OnClickListener() {
+        if (holder.photoImageView != null) {
+            holder.photoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.imageViewSizeS.setDrawingCacheEnabled(true);
-                    BitmapDrawable drawable = (BitmapDrawable) holder.imageViewSizeS.getDrawable();
+                    holder.photoImageView.setDrawingCacheEnabled(true);
+                    BitmapDrawable drawable = (BitmapDrawable) holder.photoImageView.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     presenter.handleImageButtonClick(bitmap);
                 }
@@ -87,14 +91,14 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
-        ImageView imageViewSizeS;
+        ImageView photoImageView;
         Button buttonDownload;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.tvTitle);
-            imageViewSizeS = itemView.findViewById(R.id.photoImageView);
+            photoImageView = itemView.findViewById(R.id.photoImageView);
             buttonDownload = itemView.findViewById(R.id.buttonDownload);
         }
     }

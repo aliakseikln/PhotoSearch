@@ -6,7 +6,7 @@ import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface PhotoListActivity {
+public interface PhotoListView {
 
     void hideProgressBar();
 
@@ -17,5 +17,7 @@ public interface PhotoListActivity {
     void showRecyclerView(List<Photo> listOfPhotos);
 
     void showFullScreenPhotoActivity(Bitmap bitmap);
+
+    void hideFocusSearchView();
 
 }
