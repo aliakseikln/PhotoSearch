@@ -24,11 +24,18 @@ import java.util.List;
 
 public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoListRecyclerViewAdapter.ViewHolder> {
 
-    List<Photo> photoList = new ArrayList<>();
+    private final List<Photo> photoList = new ArrayList<>();
     Context context;
     PhotoListPresenter presenter;
     String originalSizeOfPhotoUrl;
     String photoTitle;
+
+    @SuppressLint("NotifyDataSetChanged")
+    void updatePhotosList(List<Photo> updatedPhotoList) {
+        photoList.clear();
+        photoList.addAll(updatedPhotoList);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override

@@ -63,9 +63,7 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListVie
 
     @SuppressLint("NotifyDataSetChanged")
     public void showRecyclerView(List<Photo> updatedPhotoList) {
-        recyclerViewAdapter.photoList.clear();
-        recyclerViewAdapter.photoList.addAll(updatedPhotoList);
-        recyclerViewAdapter.notifyDataSetChanged();
+        recyclerViewAdapter.updatePhotosList(updatedPhotoList);
     }
 
     public void showProgressBar() {
@@ -80,8 +78,11 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListVie
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 
-    public void showFullScreenPhotoActivity(Bitmap bitmap) {
+    public void hideFocusSearchView() {
         searchView.clearFocus();
+    }
+
+    public void showFullScreenPhotoActivity(Bitmap bitmap) {
 
         Intent intent = new Intent(PhotoListViewImpl.this, FullScreenPhotoActivity.class);
 

@@ -48,6 +48,7 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceL
     }
 
     public void handleImageButtonClick(Bitmap bitmap) {
+        view.hideFocusSearchView();
         view.showFullScreenPhotoActivity(bitmap);
     }
 }

@@ -18,4 +18,6 @@ public interface PhotoListView {
 
     void showFullScreenPhotoActivity(Bitmap bitmap);
 
+    void hideFocusSearchView();
+
 }
