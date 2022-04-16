@@ -1,9 +1,11 @@
 package com.example.retrofitagain2;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BodyResponse {
+public class PhotosResponse {
 
     @SerializedName("photos")
     @Expose
@@ -28,9 +30,10 @@ public class BodyResponse {
         this.stat = stat;
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return "BodyResponse{" +
+        return "PhotosResponse{" +
                 "photos=" + photos +
                 ", stat='" + stat + '\'' +
                 '}';

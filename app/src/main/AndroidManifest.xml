@@ -3,19 +3,22 @@
     package="com.example.retrofitagain2">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Photo Search"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RetrofitAgain2">
         <activity
-            android:name=".MainActivity"
+            android:name=".FullScreenPhotoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PhotoListActivityImpl"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
