@@ -10,7 +10,6 @@ import com.example.retrofitagain2.interfaces.PhotoListPresenter;
 import com.example.retrofitagain2.interfaces.PhotoListService;
 import com.example.retrofitagain2.interfaces.PhotoServiceListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceListener {
@@ -48,7 +47,7 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceL
     }
 
     public void handleImageButtonClick(Bitmap bitmap) {
-        view.hideFocusSearchView();
+        view.hideKeyboard();
         view.showFullScreenPhotoActivity(bitmap);
     }
 }

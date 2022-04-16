@@ -78,7 +78,7 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListVie
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 
-    public void hideFocusSearchView() {
+    public void hideKeyboard() {
         searchView.clearFocus();
     }
 
