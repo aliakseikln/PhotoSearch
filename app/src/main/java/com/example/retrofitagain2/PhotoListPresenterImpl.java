@@ -1,24 +1,25 @@
 package com.example.retrofitagain2;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.example.retrofitagain2.interfaces.PhotoListView;
-import com.example.retrofitagain2.interfaces.PhotoListPresenter;
-import com.example.retrofitagain2.interfaces.PhotoListService;
+import com.example.retrofitagain2.interfaces.PhotoListContractView;
+import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
+import com.example.retrofitagain2.interfaces.PhotoListContractService;
 import com.example.retrofitagain2.interfaces.PhotoServiceListener;
 
 import java.util.List;
 
-public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceListener {
+public class PhotoListPresenterImpl implements PhotoListContractPresenter, PhotoServiceListener {
 
-    private final PhotoListService photosService = new PhotoListServiceImpl();
-    private PhotoListView view;
+    private PhotoListContractView view;
+    private PhotoListContractService photosService;
 
-    public void attachView(PhotoListView photoListActivity) {
+
+    public void attachView(PhotoListContractView photoListActivity) {
         view = photoListActivity;
+        photosService = new PhotoListServiceImpl((Context) view);
         photosService.setListener(this);
     }
 
@@ -26,13 +27,13 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoServiceL
         if (query != null) {
             view.showProgressBar();
             view.showToast("Ищем фото по запросу: " + query);
-            photosService.loadDataOfPhotosByQuery(query, (Activity) view);
+            photosService.loadDataOfPhotosByQuery(query);
         }
     }
 
-    public void handleDownloadButtonClick(Context context, String urlO, String photoTitle) {
+    public void handleDownloadButtonClick(String urlO, String photoTitle) {
         try {
-            photosService.downloadSelectedPhoto(context, urlO, photoTitle);
+            photosService.downloadSelectedPhoto(urlO, photoTitle);
             view.showToast("Загрузка изображения началась.");
         } catch (Exception e) {
             Log.e("TAG", "onFailedDownload: " + e.getMessage());

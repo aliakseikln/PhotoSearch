@@ -13,20 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.interfaces.PhotoListPresenter;
-import com.example.retrofitagain2.interfaces.PhotoListView;
+import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
+import com.example.retrofitagain2.interfaces.PhotoListContractView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class PhotoListViewImpl extends AppCompatActivity implements PhotoListView {
+public class PhotoListViewImpl extends AppCompatActivity implements PhotoListContractView {
 
     ProgressBar progressBar;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     PhotoListRecyclerViewAdapter recyclerViewAdapter;
     SearchView searchView;
-    PhotoListPresenter presenter;
+    PhotoListContractPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

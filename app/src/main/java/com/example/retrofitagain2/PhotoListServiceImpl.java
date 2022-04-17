@@ -9,30 +9,32 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
-import com.example.retrofitagain2.interfaces.PhotoListPresenter;
-import com.example.retrofitagain2.interfaces.PhotoListService;
+import com.example.retrofitagain2.interfaces.PhotoListContractService;
 import com.example.retrofitagain2.interfaces.PhotoServiceListener;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoListServiceImpl implements PhotoListService {
+public class PhotoListServiceImpl implements PhotoListContractService {
 
     private static final String TAG = "PhotoListViewImpl";
     ApiInterfaceFlickr apiInterfaceFlickr;
-    List<Photo> photoListFromResponse = new ArrayList<Photo>();
     PhotoServiceListener listener;
+    Context context;
+
+    public PhotoListServiceImpl(Context context) {
+        this.context = context;
+    }
 
     public void setListener(PhotoServiceListener listener) {
         this.listener = listener;
     }
 
-    public void loadDataOfPhotosByQuery(String query, @NonNull Context context) {
+    public void loadDataOfPhotosByQuery(String query) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query, apiKey);
@@ -41,8 +43,7 @@ public class PhotoListServiceImpl implements PhotoListService {
             public void onResponse(@NonNull Call<PhotosResponse> call, @NonNull Response<PhotosResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e(TAG, "onResponse: " + response.body());
-                    photoListFromResponse.clear();
-                    photoListFromResponse.addAll(response.body().getPhotos().getPhoto());
+                    List<Photo> photoListFromResponse = response.body().getPhotos().getPhoto();
                     listener.onPhotosServiceSuccess(photoListFromResponse);
                 }
             }
@@ -54,7 +55,7 @@ public class PhotoListServiceImpl implements PhotoListService {
         });
     }
 
-    public void downloadSelectedPhoto(@NonNull Context context, String urlO, String photoTitle) {
+    public void downloadSelectedPhoto(String urlO, String photoTitle) {
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri downloadUri = Uri.parse(urlO);
         DownloadManager.Request request = new DownloadManager.Request((Uri) downloadUri);

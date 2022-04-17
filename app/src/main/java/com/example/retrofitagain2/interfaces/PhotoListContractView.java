@@ -6,7 +6,7 @@ import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface PhotoListView {
+public interface PhotoListContractView {
 
     void hideProgressBar();
 
