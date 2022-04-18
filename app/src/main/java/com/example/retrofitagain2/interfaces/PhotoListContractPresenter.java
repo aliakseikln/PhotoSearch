@@ -6,10 +6,9 @@ public interface PhotoListContractPresenter {
 
     void handleDownloadButtonClick(String urlO, String photoTitle);
 
-    void handleSubmitSearchQuery(String query);
-
-    void attachView(PhotoListContractView view);
+    void handleSearchViewQuery(String query);
 
     void handleImageButtonClick(Bitmap bitmap);
 
+    void handleHistoryButtonClick();
 }

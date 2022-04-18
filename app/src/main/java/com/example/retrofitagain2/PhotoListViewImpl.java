@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +30,9 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
     PhotoListRecyclerViewAdapter recyclerViewAdapter;
     SearchView searchView;
     PhotoListContractPresenter presenter;
+    Toolbar toolbar;
+    ActionBar actionBar;
+    Button historyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +40,23 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
         setContentView(R.layout.activity_main);
         init();
 
+        setSupportActionBar(toolbar);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.handleHistoryButtonClick();
+
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.handleSubmitSearchQuery(query);
+                presenter.handleSearchViewQuery(query);
                 return false;
             }
 
@@ -49,8 +68,10 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
     }
 
     void init() {
-        presenter = new PhotoListPresenterImpl();
-        presenter.attachView(this);
+        historyButton = findViewById(R.id.historyButton);
+        toolbar = findViewById(R.id.toolbar);
+        actionBar = getSupportActionBar();
+        presenter = new PhotoListPresenterImpl(this);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
@@ -83,7 +104,6 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
     }
 
     public void showFullScreenPhotoActivity(Bitmap bitmap) {
-
         Intent intent = new Intent(PhotoListViewImpl.this, FullScreenPhotoActivity.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -91,6 +111,12 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
         byte[] byteArray = stream.toByteArray();
 
         intent.putExtra("image", byteArray);
+        startActivity(intent);
+    }
+
+    public void showPhotoSearchHistoryActivity(List<String> historyPhotoSearchList) {
+        Intent intent = new Intent(PhotoListViewImpl.this, PhotoSearchHistoryActivity.class);
+        //   intent.putExtra();
         startActivity(intent);
     }
 }

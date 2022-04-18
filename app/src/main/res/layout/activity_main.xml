@@ -7,6 +7,10 @@
     android:background="#3A2962FF"
     tools:context=".PhotoListViewImpl">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -33,8 +37,8 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:background="@color/white"
         android:clipToPadding="false"
@@ -43,8 +47,9 @@
         android:queryHint="Что будем искать?"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

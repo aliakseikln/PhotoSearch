@@ -26,13 +26,11 @@ public class PhotoListServiceImpl implements PhotoListContractService {
     PhotoServiceListener listener;
     Context context;
 
-    public PhotoListServiceImpl(Context context) {
+    public PhotoListServiceImpl(Context context, PhotoServiceListener listener) {
         this.context = context;
-    }
-
-    public void setListener(PhotoServiceListener listener) {
         this.listener = listener;
     }
+
 
     public void loadDataOfPhotosByQuery(String query) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);

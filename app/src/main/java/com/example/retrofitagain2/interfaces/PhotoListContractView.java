@@ -20,4 +20,5 @@ public interface PhotoListContractView {
 
     void hideKeyboard();
 
+    void showPhotoSearchHistoryActivity(List<String> historyPhotoSearchList);
 }
