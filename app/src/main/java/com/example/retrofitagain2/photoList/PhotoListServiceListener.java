@@ -1,10 +1,10 @@
-package com.example.retrofitagain2.interfaces;
+package com.example.retrofitagain2.photoList;
 
 import com.example.retrofitagain2.Photo;
 
 import java.util.List;
 
-public interface PhotoServiceListener {
+public interface PhotoListServiceListener {
 
     void onPhotosServiceSuccess(List<Photo> photoListResponse);
 

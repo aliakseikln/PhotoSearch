@@ -1,4 +1,4 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.photoDetails;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +7,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class FullScreenPhotoActivity extends AppCompatActivity {
+import com.example.retrofitagain2.R;
+
+public class PhotoDetailsActivity extends AppCompatActivity {
 
     ImageView photoImageView;
 

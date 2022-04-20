@@ -1,4 +1,4 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.services;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -8,9 +8,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
-import com.example.retrofitagain2.interfaces.PhotoListContractService;
-import com.example.retrofitagain2.interfaces.PhotoServiceListener;
+import com.example.retrofitagain2.ApiClientFlickr;
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.PhotosResponse;
+import com.example.retrofitagain2.R;
+import com.example.retrofitagain2.ApiInterfaceFlickr;
+import com.example.retrofitagain2.photoList.PhotoListServiceListener;
 
 import java.io.File;
 import java.util.List;
@@ -19,14 +22,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoListServiceImpl implements PhotoListContractService {
+public class PhotosServiceImpl implements PhotosService {
 
-    private static final String TAG = "PhotoListViewImpl";
+    private static final String TAG = "PhotoListActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
-    PhotoServiceListener listener;
+    PhotoListServiceListener listener;
     Context context;
 
-    public PhotoListServiceImpl(Context context, PhotoServiceListener listener) {
+    public PhotosServiceImpl(Context context, PhotoListServiceListener listener) {
         this.context = context;
         this.listener = listener;
     }

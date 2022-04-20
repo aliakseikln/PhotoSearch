@@ -1,8 +1,8 @@
-package com.example.retrofitagain2.interfaces;
+package com.example.retrofitagain2.photoList;
 
 import android.graphics.Bitmap;
 
-public interface PhotoListContractPresenter {
+public interface PhotoListPresenter {
 
     void handleDownloadButtonClick(String urlO, String photoTitle);
 

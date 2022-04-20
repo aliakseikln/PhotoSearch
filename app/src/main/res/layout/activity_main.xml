@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3A2962FF"
-    tools:context=".PhotoListViewImpl">
+    tools:context=".photoList.PhotoListActivity">
 
     <include
         android:id="@+id/tool_bar"

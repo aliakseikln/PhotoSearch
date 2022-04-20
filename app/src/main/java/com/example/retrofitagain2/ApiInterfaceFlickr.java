@@ -1,4 +1,4 @@
-package com.example.retrofitagain2.interfaces;
+package com.example.retrofitagain2;
 
 import com.example.retrofitagain2.PhotosResponse;
 

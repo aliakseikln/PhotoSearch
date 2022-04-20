@@ -1,4 +1,4 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.photoList;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -17,7 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
 
     private final List<Photo> photoList = new ArrayList<>();
     Context context;
-    PhotoListContractPresenter presenter;
+    PhotoListPresenter presenter;
     String originalSizeOfPhotoUrl;
     String photoTitle;
 

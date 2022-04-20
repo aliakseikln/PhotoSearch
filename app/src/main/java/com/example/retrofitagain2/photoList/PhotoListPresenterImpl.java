@@ -1,31 +1,30 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.photoList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
-import com.example.retrofitagain2.interfaces.PhotoListContractService;
-import com.example.retrofitagain2.interfaces.PhotoListContractView;
-import com.example.retrofitagain2.interfaces.PhotoServiceListener;
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.services.PhotosService;
+import com.example.retrofitagain2.services.PhotosServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoListPresenterImpl implements PhotoListContractPresenter, PhotoServiceListener {
+public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoListServiceListener {
 
-    private static final String TAG = "PhotoListViewImpl";
-    private final PhotoListContractView view;
-    private final PhotoListContractService photosService;
-    List<String> searchPhotoList = new ArrayList<>();
+    private static final String TAG = "PhotoListActivity";
+    private final PhotoListView view;
+    private final PhotosService photosService;
+    ArrayList<String> searchPhotoList = new ArrayList<>();
 
-    public PhotoListPresenterImpl(PhotoListContractView photoListActivity) {
+    public PhotoListPresenterImpl(PhotoListView photoListActivity) {
         view = photoListActivity;
-        photosService = new PhotoListServiceImpl((Context) view, this);
+        photosService = new PhotosServiceImpl((Context) view, this);
     }
 
     public void handleHistoryButtonClick() {
-        view.showPhotoSearchHistoryActivity(searchPhotoList);
+        view.showSearchHistoryActivity(searchPhotoList);
     }
 
     public void handleSearchViewQuery(String query) {
@@ -55,6 +54,6 @@ public class PhotoListPresenterImpl implements PhotoListContractPresenter, Photo
 
     public void handleImageButtonClick(Bitmap bitmap) {
         view.hideKeyboard();
-        view.showFullScreenPhotoActivity(bitmap);
+        view.showPhotoDetailsActivity(bitmap);
     }
 }
