@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.retrofitagain2.interfaces.PhotoListPresenter;
+import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
 
     private final List<Photo> photoList = new ArrayList<>();
     Context context;
-    PhotoListPresenter presenter;
+    PhotoListContractPresenter presenter;
     String originalSizeOfPhotoUrl;
     String photoTitle;
 
@@ -63,7 +63,7 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
                         .setNegativeButton("Да", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-                                presenter.handleDownloadButtonClick(context, originalSizeOfPhotoUrl, photoTitle);
+                                presenter.handleDownloadButtonClick(originalSizeOfPhotoUrl, photoTitle);
                             }
                         })
                         .show();

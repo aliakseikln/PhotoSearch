@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/drawable/boarder_for_image.xml" value="0.2635" />
+        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/drawable/ic_baseline_download_24.xml" value="0.28" />
+        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.28" />
         <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/activity_main.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/activity_photo.xml" value="0.29393115942028986" />
-        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/list_item.xml" value="0.5" />
+        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/activity_search_history.xml" value="0.3359375" />
+        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/list_item.xml" value="0.33" />
+        <entry key="..\:/Users/Bee/AndroidStudioProjects/RetrofitAgain2/app/src/main/res/layout/toolbar.xml" value="0.296195652173913" />
       </map>
     </option>
   </component>
