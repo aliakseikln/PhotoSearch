@@ -15,7 +15,6 @@ public class SearchHistoryPresenterImpl implements SearchHistoryPresenter {
         this.view = view;
         this.context = context;
         searchHistoryService = SearchHistoryServiceImpl.getInstance();
-
     }
 
     public void handleActivityOnCreate() {

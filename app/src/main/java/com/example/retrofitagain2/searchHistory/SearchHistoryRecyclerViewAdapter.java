@@ -49,7 +49,6 @@ public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Searc
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textView = itemView.findViewById(R.id.historyItemTV);
         }
     }

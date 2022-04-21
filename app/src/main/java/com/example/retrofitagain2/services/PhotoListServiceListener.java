@@ -7,5 +7,4 @@ import java.util.List;
 public interface PhotoListServiceListener {
 
     void onPhotosServiceSuccess(List<Photo> photoListResponse);
-
 }

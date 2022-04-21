@@ -33,7 +33,6 @@ public class PhotosServiceImpl implements PhotosService {
         this.listener = listener;
     }
 
-
     public void fetchPhotosByQuery(String query) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);

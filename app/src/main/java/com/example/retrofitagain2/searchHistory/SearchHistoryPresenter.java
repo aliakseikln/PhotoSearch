@@ -5,5 +5,4 @@ import android.content.Context;
 public interface SearchHistoryPresenter {
 
     void handleActivityOnCreate();
-
 }

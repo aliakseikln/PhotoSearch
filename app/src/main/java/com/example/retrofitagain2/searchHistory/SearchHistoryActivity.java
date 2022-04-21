@@ -34,7 +34,6 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
         recyclerViewAdapter = new SearchHistoryRecyclerViewAdapter();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
-
     }
 
     public void showHistoryItems(ArrayList<String> historyQueriesList) {

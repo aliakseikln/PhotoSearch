@@ -9,5 +9,4 @@ public interface SearchHistoryService {
     void addHistoryQuery(String query, Context context);
 
     ArrayList<String> fetchAllHistory(Context context);
-
 }
