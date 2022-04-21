@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Photo Search"
@@ -15,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetrofitAgain2">
         <activity
-            android:name=".PhotoSearchHistoryActivity"
+            android:name=".searchHistory.SearchHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".FullScreenPhotoActivity"
+            android:name=".photoDetails.PhotoDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PhotoListViewImpl"
+            android:name=".photoList.PhotoListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

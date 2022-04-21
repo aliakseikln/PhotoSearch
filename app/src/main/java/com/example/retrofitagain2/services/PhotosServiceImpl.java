@@ -1,4 +1,4 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.services;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -8,9 +8,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.retrofitagain2.interfaces.ApiInterfaceFlickr;
-import com.example.retrofitagain2.interfaces.PhotoListContractService;
-import com.example.retrofitagain2.interfaces.PhotoServiceListener;
+import com.example.retrofitagain2.ApiClientFlickr;
+import com.example.retrofitagain2.ApiInterfaceFlickr;
+import com.example.retrofitagain2.MyApplication;
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.PhotosResponse;
+import com.example.retrofitagain2.R;
 
 import java.io.File;
 import java.util.List;
@@ -19,20 +22,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoListServiceImpl implements PhotoListContractService {
+public class PhotosServiceImpl implements PhotosService {
 
-    private static final String TAG = "PhotoListViewImpl";
+    private static final String TAG = "PhotoListActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
-    PhotoServiceListener listener;
-    Context context;
+    PhotoListServiceListener listener;
+    Context context = MyApplication.getContext();
 
-    public PhotoListServiceImpl(Context context, PhotoServiceListener listener) {
-        this.context = context;
+    public PhotosServiceImpl(PhotoListServiceListener listener) {
         this.listener = listener;
     }
 
-
-    public void loadDataOfPhotosByQuery(String query) {
+    public void fetchPhotosByQuery(String query) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query, apiKey);
@@ -53,9 +54,9 @@ public class PhotoListServiceImpl implements PhotoListContractService {
         });
     }
 
-    public void downloadSelectedPhoto(String urlO, String photoTitle) {
+    public void loadPhotosByQuery(String urlString, String photoTitle) {
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri downloadUri = Uri.parse(urlO);
+        Uri downloadUri = Uri.parse(urlString);
         DownloadManager.Request request = new DownloadManager.Request((Uri) downloadUri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
                 .setAllowedOverRoaming(false)

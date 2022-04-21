@@ -1,4 +1,4 @@
-package com.example.retrofitagain2;
+package com.example.retrofitagain2.photoList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,20 +16,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.interfaces.PhotoListContractPresenter;
-import com.example.retrofitagain2.interfaces.PhotoListContractView;
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.R;
+import com.example.retrofitagain2.photoDetails.PhotoDetailsActivity;
+import com.example.retrofitagain2.searchHistory.SearchHistoryActivity;
+import com.example.retrofitagain2.services.SearchHistoryService;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class PhotoListViewImpl extends AppCompatActivity implements PhotoListContractView {
+public class PhotoListActivity extends AppCompatActivity implements PhotoListView {
 
     ProgressBar progressBar;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     PhotoListRecyclerViewAdapter recyclerViewAdapter;
     SearchView searchView;
-    PhotoListContractPresenter presenter;
+    PhotoListPresenter presenter;
     Toolbar toolbar;
     ActionBar actionBar;
     Button historyButton;
@@ -49,7 +52,6 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
             @Override
             public void onClick(View v) {
                 presenter.handleHistoryButtonClick();
-
             }
         });
 
@@ -69,7 +71,7 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
 
     void init() {
         historyButton = findViewById(R.id.historyButton);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         actionBar = getSupportActionBar();
         presenter = new PhotoListPresenterImpl(this);
         recyclerView = findViewById(R.id.recyclerView);
@@ -103,20 +105,17 @@ public class PhotoListViewImpl extends AppCompatActivity implements PhotoListCon
         searchView.clearFocus();
     }
 
-    public void showFullScreenPhotoActivity(Bitmap bitmap) {
-        Intent intent = new Intent(PhotoListViewImpl.this, FullScreenPhotoActivity.class);
-
+    public void showPhotoDetailsActivity(Bitmap bitmap) {
+        Intent intent = new Intent(PhotoListActivity.this, PhotoDetailsActivity.class);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-
         intent.putExtra("image", byteArray);
         startActivity(intent);
     }
 
-    public void showPhotoSearchHistoryActivity(List<String> historyPhotoSearchList) {
-        Intent intent = new Intent(PhotoListViewImpl.this, PhotoSearchHistoryActivity.class);
-        //   intent.putExtra();
+    public void showSearchHistoryActivity(SearchHistoryService searchHistoryService) {
+        Intent intent = new Intent(PhotoListActivity.this, SearchHistoryActivity.class);
         startActivity(intent);
     }
 }
