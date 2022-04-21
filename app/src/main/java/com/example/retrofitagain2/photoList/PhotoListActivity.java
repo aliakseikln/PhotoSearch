@@ -1,8 +1,8 @@
 package com.example.retrofitagain2.photoList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -17,17 +17,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.photoDetails.PhotoDetailsActivity;
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.R;
+import com.example.retrofitagain2.photoDetails.PhotoDetailsActivity;
 import com.example.retrofitagain2.searchHistory.SearchHistoryActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.retrofitagain2.services.SearchHistoryService;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListActivity extends AppCompatActivity implements PhotoListView {
@@ -41,6 +37,7 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
     Toolbar toolbar;
     ActionBar actionBar;
     Button historyButton;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
             @Override
             public void onClick(View v) {
                 presenter.handleHistoryButtonClick();
-
             }
         });
 
@@ -76,10 +72,11 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
     }
 
     void init() {
+        context = getApplicationContext();
         historyButton = findViewById(R.id.historyButton);
         Toolbar toolbar = findViewById(R.id.toolbar);
         actionBar = getSupportActionBar();
-        presenter = new PhotoListPresenterImpl(this);
+        presenter = new PhotoListPresenterImpl(this, context);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);
@@ -120,11 +117,8 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
         startActivity(intent);
     }
 
-    public void showSearchHistoryActivity(ArrayList<String> historyPhotoSearchList) {
+    public void showSearchHistoryActivity(SearchHistoryService searchHistoryService) {
         Intent intent = new Intent(PhotoListActivity.this, SearchHistoryActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("historyArray", (Serializable) historyPhotoSearchList);
-        intent.putExtra("bundle", bundle);
         startActivity(intent);
     }
 }

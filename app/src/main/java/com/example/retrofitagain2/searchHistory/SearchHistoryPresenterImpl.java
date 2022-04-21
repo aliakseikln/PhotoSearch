@@ -5,23 +5,20 @@ import android.content.Context;
 import com.example.retrofitagain2.services.SearchHistoryService;
 import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
 
-import java.util.ArrayList;
-
-public class SearchHistoryPresenterImpl implements SearchHistoryPresenter, SearchHistoryServiceListener {
+public class SearchHistoryPresenterImpl implements SearchHistoryPresenter {
 
     private final SearchHistoryView view;
-    private final SearchHistoryService service;
+    private final SearchHistoryService searchHistoryService;
+    Context context;
 
-    public SearchHistoryPresenterImpl(SearchHistoryActivity activity) {
-        view = activity;
-        service = new SearchHistoryServiceImpl((Context) view, this);
+    public SearchHistoryPresenterImpl(SearchHistoryActivity view, Context context) {
+        this.view = view;
+        this.context = context;
+        searchHistoryService = SearchHistoryServiceImpl.getInstance();
+
     }
 
-    public void handleActivityOnCreate(ArrayList<String> searchQueriesList) {
-        service.createAndUpdateDB(searchQueriesList);
-    }
-
-    public void onDBSavedAndUpdated(ArrayList<String> historyQueriesList) {
-        view.showRecyclerView(historyQueriesList);
+    public void handleActivityOnCreate() {
+        view.showHistoryItems(searchHistoryService.fetchAllHistory(context));
     }
 }

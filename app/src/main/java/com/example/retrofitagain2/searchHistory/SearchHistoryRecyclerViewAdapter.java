@@ -16,11 +16,13 @@ import java.util.List;
 
 public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<SearchHistoryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<String> photoSearchList = new ArrayList<>();
+    private final ArrayList<String> photoSearchList = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
-    void updatePhotosListHistory(List<String> updatedListHistory) {
-        photoSearchList.addAll(updatedListHistory);
+    void updatePhotosListHistory(ArrayList<String> updatedListHistory) {
+        if (updatedListHistory != null) {
+            photoSearchList.addAll(updatedListHistory);
+        }
         notifyDataSetChanged();
     }
 

@@ -5,26 +5,25 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.retrofitagain2.searchHistory.SearchHistoryPresenterImpl;
-import com.example.retrofitagain2.searchHistory.SearchHistoryServiceListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class SearchHistoryServiceImpl implements SearchHistoryService{
+public class SearchHistoryServiceImpl implements SearchHistoryService {
 
-    SearchHistoryServiceListener listener;
-    Context context;
+    private static final SearchHistoryServiceImpl INSTANCE = new SearchHistoryServiceImpl();
     ArrayList<String> temporaryHistoryList;
 
-    public SearchHistoryServiceImpl(Context context, SearchHistoryPresenterImpl listener) {
-        this.context = context;
-        this.listener = listener;
+    private SearchHistoryServiceImpl() {
     }
 
-    public void createAndUpdateDB(ArrayList<String> queryHistoryList) {
+    public static SearchHistoryServiceImpl getInstance() {
+        return INSTANCE;
+    }
+
+    public void addHistoryQuery(String query, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gsonToGet = new Gson();
         String json = sharedPreferences.getString("historyStrings", null);
@@ -34,14 +33,24 @@ public class SearchHistoryServiceImpl implements SearchHistoryService{
         if ((gsonToGet.fromJson(json, type)) != null) {
             temporaryHistoryList = gsonToGet.fromJson(json, type);
         }
-         temporaryHistoryList.addAll(queryHistoryList);
+        temporaryHistoryList.add(query);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gsonToPut = new Gson();
         json = gsonToPut.toJson(temporaryHistoryList);
         editor.putString("historyStrings", json);
         editor.apply();
+    }
 
-        listener.onDBSavedAndUpdated(temporaryHistoryList);
+    public ArrayList<String> fetchAllHistory(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gsonToGet = new Gson();
+        String json = sharedPreferences.getString("historyStrings", null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        if ((gsonToGet.fromJson(json, type)) != null) {
+            temporaryHistoryList = gsonToGet.fromJson(json, type);
+        }
+        return temporaryHistoryList;
     }
 }

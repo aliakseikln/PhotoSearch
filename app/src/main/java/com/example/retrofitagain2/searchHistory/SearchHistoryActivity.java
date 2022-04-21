@@ -1,6 +1,6 @@
 package com.example.retrofitagain2.searchHistory;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,30 +16,28 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
     RecyclerView recyclerView;
     SearchHistoryRecyclerViewAdapter recyclerViewAdapter;
     SearchHistoryPresenter presenter;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_history);
         init();
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("bundle");
-        ArrayList<String> queryHistoryList = (ArrayList<String>) bundle.getSerializable("historyArray");
-
-        presenter.handleActivityOnCreate(queryHistoryList);
+        presenter.handleActivityOnCreate();
     }
 
     void init() {
+        context = getApplicationContext();
         recyclerView = findViewById(R.id.recyclerViewSearchHistory);
-        presenter = new SearchHistoryPresenterImpl(this);
+        presenter = new SearchHistoryPresenterImpl(this,context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewAdapter = new SearchHistoryRecyclerViewAdapter();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
+
     }
 
-    public void showRecyclerView(ArrayList<String> historyQueriesList) {
+    public void showHistoryItems(ArrayList<String> historyQueriesList) {
         recyclerViewAdapter.updatePhotosListHistory(historyQueriesList);
     }
 }

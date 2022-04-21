@@ -1,4 +1,4 @@
-package com.example.retrofitagain2.photoList;
+package com.example.retrofitagain2.services;
 
 import com.example.retrofitagain2.Photo;
 

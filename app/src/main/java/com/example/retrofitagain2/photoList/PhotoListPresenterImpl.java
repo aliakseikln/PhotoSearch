@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.services.PhotoListServiceListener;
 import com.example.retrofitagain2.services.PhotosService;
 import com.example.retrofitagain2.services.PhotosServiceImpl;
+import com.example.retrofitagain2.services.SearchHistoryService;
+import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoListServiceListener {
@@ -16,29 +18,32 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoListServ
     private static final String TAG = "PhotoListActivity";
     private final PhotoListView view;
     private final PhotosService photosService;
-    ArrayList<String> searchPhotoList = new ArrayList<>();
+    private final SearchHistoryService searchHistoryService;
+    Context context;
 
-    public PhotoListPresenterImpl(PhotoListView photoListActivity) {
-        view = photoListActivity;
-        photosService = new PhotosServiceImpl((Context) view, this);
+    public PhotoListPresenterImpl(PhotoListView view, Context context) {
+        this.view = view;
+        this.context = context;
+        photosService = new PhotosServiceImpl(context, this);
+        searchHistoryService = SearchHistoryServiceImpl.getInstance();
     }
 
     public void handleHistoryButtonClick() {
-        view.showSearchHistoryActivity(searchPhotoList);
+        view.showSearchHistoryActivity(searchHistoryService);
     }
 
     public void handleSearchViewQuery(String query) {
         if (query != null) {
-            searchPhotoList.add(query);
+            searchHistoryService.addHistoryQuery(query,context);
             view.showProgressBar();
             view.showToast("Ищем фото по запросу: " + query);
-            photosService.loadDataOfPhotosByQuery(query);
+            photosService.fetchPhotosByQuery(query);
         }
     }
 
     public void handleDownloadButtonClick(String urlO, String photoTitle) {
         try {
-            photosService.downloadSelectedPhoto(urlO, photoTitle);
+            photosService.loadPhotosByQuery(urlO, photoTitle);
             view.showToast("Загрузка изображения началась.");
         } catch (Exception e) {
             Log.e(TAG, "onFailedDownload: " + e.getMessage());

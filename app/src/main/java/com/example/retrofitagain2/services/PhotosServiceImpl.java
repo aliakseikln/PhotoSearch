@@ -13,7 +13,6 @@ import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosResponse;
 import com.example.retrofitagain2.R;
 import com.example.retrofitagain2.ApiInterfaceFlickr;
-import com.example.retrofitagain2.photoList.PhotoListServiceListener;
 
 import java.io.File;
 import java.util.List;
@@ -35,7 +34,7 @@ public class PhotosServiceImpl implements PhotosService {
     }
 
 
-    public void loadDataOfPhotosByQuery(String query) {
+    public void fetchPhotosByQuery(String query) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query, apiKey);
@@ -56,9 +55,9 @@ public class PhotosServiceImpl implements PhotosService {
         });
     }
 
-    public void downloadSelectedPhoto(String urlO, String photoTitle) {
+    public void loadPhotosByQuery(String urlString, String photoTitle) {
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri downloadUri = Uri.parse(urlO);
+        Uri downloadUri = Uri.parse(urlString);
         DownloadManager.Request request = new DownloadManager.Request((Uri) downloadUri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
                 .setAllowedOverRoaming(false)

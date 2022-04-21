@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public interface SearchHistoryView {
 
-    void showRecyclerView(ArrayList<String> historyQueriesList);
+    void showHistoryItems(ArrayList<String> historyQueriesList);
 }
