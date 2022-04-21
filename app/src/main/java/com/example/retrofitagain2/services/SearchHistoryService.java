@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface SearchHistoryService {
 
-    void addHistoryQuery(String query, Context context);
+    void addHistoryQuery(String query);
 
-    ArrayList<String> fetchAllHistory(Context context);
+    ArrayList<String> fetchAllHistory();
 }

@@ -9,10 +9,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.retrofitagain2.ApiClientFlickr;
+import com.example.retrofitagain2.ApiInterfaceFlickr;
+import com.example.retrofitagain2.MyApplication;
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosResponse;
 import com.example.retrofitagain2.R;
-import com.example.retrofitagain2.ApiInterfaceFlickr;
 
 import java.io.File;
 import java.util.List;
@@ -26,10 +27,9 @@ public class PhotosServiceImpl implements PhotosService {
     private static final String TAG = "PhotoListActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
     PhotoListServiceListener listener;
-    Context context;
+    Context context = MyApplication.getContext();
 
-    public PhotosServiceImpl(Context context, PhotoListServiceListener listener) {
-        this.context = context;
+    public PhotosServiceImpl(PhotoListServiceListener listener) {
         this.listener = listener;
     }
 

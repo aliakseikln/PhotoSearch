@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.retrofitagain2.MyApplication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,6 +16,7 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
 
     private static final SearchHistoryServiceImpl INSTANCE = new SearchHistoryServiceImpl();
     ArrayList<String> temporaryHistoryList;
+    Context context = MyApplication.getContext();
 
     private SearchHistoryServiceImpl() {
     }
@@ -23,7 +25,8 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
         return INSTANCE;
     }
 
-    public void addHistoryQuery(String query, Context context) {
+    public void addHistoryQuery(String query) {
+
         SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gsonToGet = new Gson();
         String json = sharedPreferences.getString("historyStrings", null);
@@ -42,15 +45,17 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
         editor.apply();
     }
 
-    public ArrayList<String> fetchAllHistory(Context context) {
+    public ArrayList<String> fetchAllHistory() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gsonToGet = new Gson();
         String json = sharedPreferences.getString("historyStrings", null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
-        if ((gsonToGet.fromJson(json, type)) != null) {
-            temporaryHistoryList = gsonToGet.fromJson(json, type);
+        ArrayList<String> historyQueriesList = gsonToGet.fromJson(json, type);
+        if (historyQueriesList != null) {
+            return historyQueriesList;
+        } else {
+            return new ArrayList<>();
         }
-        return temporaryHistoryList;
     }
 }

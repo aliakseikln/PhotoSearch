@@ -19,12 +19,10 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoListServ
     private final PhotoListView view;
     private final PhotosService photosService;
     private final SearchHistoryService searchHistoryService;
-    Context context;
 
-    public PhotoListPresenterImpl(PhotoListView view, Context context) {
+    public PhotoListPresenterImpl(PhotoListView view) {
         this.view = view;
-        this.context = context;
-        photosService = new PhotosServiceImpl(context, this);
+        photosService = new PhotosServiceImpl(this);
         searchHistoryService = SearchHistoryServiceImpl.getInstance();
     }
 
@@ -34,7 +32,7 @@ public class PhotoListPresenterImpl implements PhotoListPresenter, PhotoListServ
 
     public void handleSearchViewQuery(String query) {
         if (query != null) {
-            searchHistoryService.addHistoryQuery(query,context);
+            searchHistoryService.addHistoryQuery(query);
             view.showProgressBar();
             view.showToast("Ищем фото по запросу: " + query);
             photosService.fetchPhotosByQuery(query);

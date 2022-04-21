@@ -9,15 +9,13 @@ public class SearchHistoryPresenterImpl implements SearchHistoryPresenter {
 
     private final SearchHistoryView view;
     private final SearchHistoryService searchHistoryService;
-    Context context;
 
-    public SearchHistoryPresenterImpl(SearchHistoryActivity view, Context context) {
+    public SearchHistoryPresenterImpl(SearchHistoryActivity view) {
         this.view = view;
-        this.context = context;
         searchHistoryService = SearchHistoryServiceImpl.getInstance();
     }
 
     public void handleActivityOnCreate() {
-        view.showHistoryItems(searchHistoryService.fetchAllHistory(context));
+        view.showHistoryItems(searchHistoryService.fetchAllHistory());
     }
 }

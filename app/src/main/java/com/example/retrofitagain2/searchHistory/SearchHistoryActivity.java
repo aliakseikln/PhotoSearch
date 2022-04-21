@@ -16,7 +16,6 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
     RecyclerView recyclerView;
     SearchHistoryRecyclerViewAdapter recyclerViewAdapter;
     SearchHistoryPresenter presenter;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +26,8 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
     }
 
     void init() {
-        context = getApplicationContext();
         recyclerView = findViewById(R.id.recyclerViewSearchHistory);
-        presenter = new SearchHistoryPresenterImpl(this,context);
+        presenter = new SearchHistoryPresenterImpl(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewAdapter = new SearchHistoryRecyclerViewAdapter();
         recyclerView.setLayoutManager(layoutManager);

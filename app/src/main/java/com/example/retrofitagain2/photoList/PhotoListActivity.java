@@ -1,7 +1,6 @@
 package com.example.retrofitagain2.photoList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -37,7 +36,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
     Toolbar toolbar;
     ActionBar actionBar;
     Button historyButton;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +70,10 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListVie
     }
 
     void init() {
-        context = getApplicationContext();
         historyButton = findViewById(R.id.historyButton);
         Toolbar toolbar = findViewById(R.id.toolbar);
         actionBar = getSupportActionBar();
-        presenter = new PhotoListPresenterImpl(this, context);
+        presenter = new PhotoListPresenterImpl(this);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         layoutManager = new LinearLayoutManager(this);

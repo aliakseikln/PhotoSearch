@@ -12,17 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.retrofitagain2.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchHistoryRecyclerViewAdapter extends RecyclerView.Adapter<SearchHistoryRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<String> photoSearchList = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
-    void updatePhotosListHistory(ArrayList<String> updatedListHistory) {
-        if (updatedListHistory != null) {
-            photoSearchList.addAll(updatedListHistory);
-        }
+    void updatePhotosListHistory(@NonNull ArrayList<String> updatedListHistory) {
+        photoSearchList.addAll(updatedListHistory);
         notifyDataSetChanged();
     }
 
