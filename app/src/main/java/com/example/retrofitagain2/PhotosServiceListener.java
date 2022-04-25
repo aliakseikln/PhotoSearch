@@ -5,4 +5,6 @@ import java.util.List;
 public interface PhotosServiceListener {
 
     void onPhotoServiceSuccess(List<Photo> response);
+
+    void onFailure(String errorMsg);
 }

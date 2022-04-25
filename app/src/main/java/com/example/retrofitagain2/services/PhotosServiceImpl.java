@@ -47,6 +47,7 @@ public class PhotosServiceImpl implements PhotosService {
             @Override
             public void onFailure(@NonNull Call<PhotosResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
+                photosServiceListener.onFailure(t.getMessage());
             }
         });
     }

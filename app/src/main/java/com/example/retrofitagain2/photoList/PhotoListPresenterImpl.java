@@ -3,10 +3,14 @@ package com.example.retrofitagain2.photoList;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.example.retrofitagain2.Photo;
+import com.example.retrofitagain2.PhotosServiceListener;
 import com.example.retrofitagain2.services.PhotosService;
 import com.example.retrofitagain2.services.PhotosServiceImpl;
 import com.example.retrofitagain2.services.SearchHistoryService;
 import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
+
+import java.util.List;
 
 public class PhotoListPresenterImpl implements PhotoListPresenter {
 
@@ -31,11 +35,21 @@ public class PhotoListPresenterImpl implements PhotoListPresenter {
             view.showProgressBar();
             view.showToast("Ищем фото по запросу: " + query);
 
-            photosService.fetchPhotosByQuery(query, photoListFromResponse -> {
-                view.showRecyclerView(photoListFromResponse);
-                view.showToast("Вот что мы нашли по вашему запросу");
-                view.hideProgressBar();
-            });
+            photosService.fetchPhotosByQuery(query, new PhotosServiceListener() {
+                        @Override
+                        public void onPhotoServiceSuccess(List<Photo> response) {
+                            view.showRecyclerView(response);
+                            view.showToast("Вот что мы нашли по вашему запросу");
+                            view.hideProgressBar();
+                        }
+
+                        @Override
+                        public void onFailure(String errorMsg) {
+                            view.showToast(errorMsg);
+                            view.hideProgressBar();
+                        }
+                    }
+            );
         }
     }
 
