@@ -7,6 +7,10 @@ import com.example.retrofitagain2.services.SearchHistoryService;
 
 import java.util.List;
 
+import dagger.Module;
+import dagger.Provides;
+
+
 public interface PhotoListView {
 
     void hideProgressBar();
@@ -21,5 +25,5 @@ public interface PhotoListView {
 
     void hideKeyboard();
 
-    void showSearchHistoryActivity(SearchHistoryService searchHistoryService);
+    void showSearchHistoryActivity();
 }

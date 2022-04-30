@@ -5,4 +5,6 @@ import android.content.Context;
 public interface SearchHistoryPresenter {
 
     void handleActivityOnCreate();
+
+    void attachView(SearchHistoryView view);
 }

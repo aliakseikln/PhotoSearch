@@ -5,25 +5,29 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.retrofitagain2.MyApplication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class SearchHistoryServiceImpl implements SearchHistoryService {
 
-    private static final SearchHistoryServiceImpl INSTANCE = new SearchHistoryServiceImpl();
+    // private static final SearchHistoryServiceImpl INSTANCE = new SearchHistoryServiceImpl();
     ArrayList<String> temporaryHistoryList;
-    Context context = MyApplication.getContext();
+    // Context context = App.getContext();
+    Context context;
 
-    private SearchHistoryServiceImpl() {
+    @Inject
+    public SearchHistoryServiceImpl(Context context) {
+        this.context = context;
     }
 
-    public static SearchHistoryServiceImpl getInstance() {
-        return INSTANCE;
-    }
+//    public static SearchHistoryServiceImpl getInstance() {
+//        return INSTANCE;
+//    }
 
     public void addHistoryQuery(String query) {
 
