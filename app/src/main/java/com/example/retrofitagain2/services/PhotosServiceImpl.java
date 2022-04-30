@@ -13,6 +13,7 @@ import com.example.retrofitagain2.ApiInterfaceFlickr;
 import com.example.retrofitagain2.MyApplication;
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosResponse;
+import com.example.retrofitagain2.PhotosServiceListener;
 import com.example.retrofitagain2.R;
 
 import java.io.File;
@@ -26,14 +27,10 @@ public class PhotosServiceImpl implements PhotosService {
 
     private static final String TAG = "PhotoListActivity";
     ApiInterfaceFlickr apiInterfaceFlickr;
-    PhotoListServiceListener listener;
     Context context = MyApplication.getContext();
 
-    public PhotosServiceImpl(PhotoListServiceListener listener) {
-        this.listener = listener;
-    }
-
-    public void fetchPhotosByQuery(String query) {
+    @Override
+    public void fetchPhotosByQuery(String query, PhotosServiceListener photosServiceListener) {
         String apiKey = context.getResources().getString(R.string.my_flickr_api_key);
         apiInterfaceFlickr = ApiClientFlickr.getClient().create(ApiInterfaceFlickr.class);
         Call<PhotosResponse> callGetAll = apiInterfaceFlickr.getAllBySearch(query, apiKey);
@@ -43,17 +40,19 @@ public class PhotosServiceImpl implements PhotosService {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e(TAG, "onResponse: " + response.body());
                     List<Photo> photoListFromResponse = response.body().getPhotos().getPhoto();
-                    listener.onPhotosServiceSuccess(photoListFromResponse);
+                    photosServiceListener.onPhotoServiceSuccess(photoListFromResponse);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PhotosResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
+                photosServiceListener.onFailure(t.getMessage());
             }
         });
     }
 
+    @Override
     public void loadPhotosByQuery(String urlString, String photoTitle) {
         DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri downloadUri = Uri.parse(urlString);
