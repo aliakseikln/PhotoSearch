@@ -11,6 +11,4 @@ public interface PhotoListPresenter {
     void handleImageButtonClick(Bitmap bitmap);
 
     void handleHistoryButtonClick();
-
-    void attachView(PhotoListView view);
 }

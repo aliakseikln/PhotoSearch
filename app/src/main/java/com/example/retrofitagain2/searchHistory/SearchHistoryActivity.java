@@ -2,18 +2,20 @@ package com.example.retrofitagain2.searchHistory;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.App;
+import com.example.retrofitagain2.Application;
+import com.example.retrofitagain2.BaseActivity;
 import com.example.retrofitagain2.R;
+import com.example.retrofitagain2.di.components.DaggerSearchHistoryViewComponent;
+import com.example.retrofitagain2.di.module.SearchHistoryViewModule;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class SearchHistoryActivity extends AppCompatActivity implements SearchHistoryView {
+public class SearchHistoryActivity extends BaseActivity implements SearchHistoryView {
 
     RecyclerView recyclerView;
     SearchHistoryRecyclerViewAdapter recyclerViewAdapter;
@@ -23,14 +25,21 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((App) getApplication()).getAppComponent().inject(this);
         setContentView(R.layout.activity_search_history);
         init();
         presenter.handleActivityOnCreate();
     }
 
+    @Override
+    protected void setupActivityComponent() {
+        DaggerSearchHistoryViewComponent.builder()
+                .appComponent(Application.getAppComponent())
+                .searchHistoryViewModule(new SearchHistoryViewModule(this))
+                .build()
+                .inject(this);
+    }
+
     void init() {
-        presenter.attachView(this);
         recyclerView = findViewById(R.id.recyclerViewSearchHistory);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewAdapter = new SearchHistoryRecyclerViewAdapter();

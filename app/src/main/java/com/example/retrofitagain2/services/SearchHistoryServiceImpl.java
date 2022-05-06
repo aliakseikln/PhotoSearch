@@ -12,25 +12,20 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class SearchHistoryServiceImpl implements SearchHistoryService {
 
-    // private static final SearchHistoryServiceImpl INSTANCE = new SearchHistoryServiceImpl();
-    ArrayList<String> temporaryHistoryList;
-    // Context context = App.getContext();
-    Context context;
+    private final Context context;
+    private ArrayList<String> temporaryHistoryList;
 
     @Inject
     public SearchHistoryServiceImpl(Context context) {
         this.context = context;
     }
 
-//    public static SearchHistoryServiceImpl getInstance() {
-//        return INSTANCE;
-//    }
-
     public void addHistoryQuery(String query) {
-
         SharedPreferences sharedPreferences = context.getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gsonToGet = new Gson();
         String json = sharedPreferences.getString("historyStrings", null);

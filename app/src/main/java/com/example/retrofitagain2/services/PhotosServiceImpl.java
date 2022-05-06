@@ -27,7 +27,6 @@ import retrofit2.Response;
 public class PhotosServiceImpl implements PhotosService {
 
     private static final String TAG = "PhotosServiceImpl";
-    //  Context context = App.getContext();
     private final Context context;
     ApiInterfaceFlickr apiInterfaceFlickr;
 

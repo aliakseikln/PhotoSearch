@@ -3,13 +3,8 @@ package com.example.retrofitagain2.photoList;
 import android.graphics.Bitmap;
 
 import com.example.retrofitagain2.Photo;
-import com.example.retrofitagain2.services.SearchHistoryService;
 
 import java.util.List;
-
-import dagger.Module;
-import dagger.Provides;
-
 
 public interface PhotoListView {
 

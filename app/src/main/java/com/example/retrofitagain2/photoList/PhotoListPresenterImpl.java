@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosServiceListener;
 import com.example.retrofitagain2.services.PhotosService;
-import com.example.retrofitagain2.services.PhotosServiceImpl;
 import com.example.retrofitagain2.services.SearchHistoryService;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
 
 import java.util.List;
 
@@ -18,18 +16,15 @@ import javax.inject.Inject;
 
 public class PhotoListPresenterImpl implements PhotoListPresenter {
 
-    private static final String TAG = "PhotoListActivity";
-    private PhotoListView view;
+    private static final String TAG = "PhotoListPresenterImpl";
     private final PhotosService photosService;
     private final SearchHistoryService searchHistoryService;
+    private final PhotoListView view;
 
     @Inject
-    public PhotoListPresenterImpl(PhotosService photosService, SearchHistoryService searchHistoryService) {
+    public PhotoListPresenterImpl(PhotosService photosService, SearchHistoryService searchHistoryService, PhotoListView view) {
         this.photosService = photosService;
         this.searchHistoryService = searchHistoryService;
-    }
-
-    public void attachView(PhotoListView view) {
         this.view = view;
     }
 
