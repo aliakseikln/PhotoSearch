@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".photoDetails.PhotoDetailsActivity">
+    tools:context="com.example.retrofitagain2.photoDetails.PhotoDetailsActivity">
 
     <ImageView
+        android:contentDescription="photo"
         android:id="@+id/photoImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

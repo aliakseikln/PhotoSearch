@@ -4,8 +4,6 @@ import com.example.retrofitagain2.di.module.AppModule;
 import com.example.retrofitagain2.services.PhotosService;
 import com.example.retrofitagain2.services.SearchHistoryService;
 
-import javax.inject.Singleton;
-
 import dagger.Component;
 
 @Component(modules = AppModule.class)

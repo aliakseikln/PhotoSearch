@@ -29,7 +29,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-
 public class PhotoListActivity extends BaseActivity implements PhotoListView {
 
     ProgressBar progressBar;

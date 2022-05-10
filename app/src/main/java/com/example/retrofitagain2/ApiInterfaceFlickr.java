@@ -1,7 +1,5 @@
 package com.example.retrofitagain2;
 
-import com.example.retrofitagain2.PhotosResponse;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

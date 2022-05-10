@@ -1,11 +1,9 @@
 package com.example.retrofitagain2.di.module;
 
-import com.example.retrofitagain2.Application;
 import com.example.retrofitagain2.searchHistory.SearchHistoryPresenter;
 import com.example.retrofitagain2.searchHistory.SearchHistoryPresenterImpl;
 import com.example.retrofitagain2.searchHistory.SearchHistoryView;
 import com.example.retrofitagain2.services.SearchHistoryService;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
 
 import dagger.Module;
 import dagger.Provides;

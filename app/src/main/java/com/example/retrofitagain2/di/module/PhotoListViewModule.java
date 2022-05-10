@@ -1,16 +1,11 @@
 package com.example.retrofitagain2.di.module;
 
-import com.example.retrofitagain2.Application;
 import com.example.retrofitagain2.photoList.PhotoListActivity;
 import com.example.retrofitagain2.photoList.PhotoListPresenter;
 import com.example.retrofitagain2.photoList.PhotoListPresenterImpl;
 import com.example.retrofitagain2.photoList.PhotoListView;
 import com.example.retrofitagain2.services.PhotosService;
-import com.example.retrofitagain2.services.PhotosServiceImpl;
 import com.example.retrofitagain2.services.SearchHistoryService;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
