@@ -3,7 +3,6 @@ package com.example.retrofitagain2.photoList;
 import android.graphics.Bitmap;
 
 import com.example.retrofitagain2.Photo;
-import com.example.retrofitagain2.services.SearchHistoryService;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface PhotoListView {
 
     void hideKeyboard();
 
-    void showSearchHistoryActivity(SearchHistoryService searchHistoryService);
+    void showSearchHistoryActivity();
 }

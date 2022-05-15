@@ -3,7 +3,6 @@ package com.example.retrofitagain2.photoList;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import com.example.retrofitagain2.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoListRecyclerViewAdapter.ViewHolder> {
 
@@ -51,35 +51,24 @@ public class PhotoListRecyclerViewAdapter extends RecyclerView.Adapter<PhotoList
         holder.tvTitle.setText(photoList.get(position).getTitle());
         Glide.with(context).load(photoList.get(position).getUrlS()).into(holder.photoImageView);
 
-        holder.buttonDownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                originalSizeOfPhotoUrl = photoList.get(position).getUrlO();
-                photoTitle = photoList.get(position).getTitle();
+        holder.buttonDownload.setOnClickListener(v -> {
+            originalSizeOfPhotoUrl = photoList.get(position).getUrlO();
+            photoTitle = photoList.get(position).getTitle();
 
-                new AlertDialog.Builder(context)
-                        .setMessage("Желаете загрузить картинку?")
-                        .setCancelable(false)
-                        .setPositiveButton("Нет", null)
-                        .setNegativeButton("Да", new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                presenter.handleDownloadButtonClick(originalSizeOfPhotoUrl, photoTitle);
-                            }
-                        })
-                        .show();
-            }
+            new AlertDialog.Builder(context)
+                    .setMessage("Желаете загрузить картинку?")
+                    .setCancelable(false)
+                    .setPositiveButton("Нет", null)
+                    .setNegativeButton("Да", (dialog, which) -> presenter.handleDownloadButtonClick(originalSizeOfPhotoUrl, photoTitle))
+                    .show();
         });
 
         if (holder.photoImageView != null) {
-            holder.photoImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.photoImageView.setDrawingCacheEnabled(true);
-                    BitmapDrawable drawable = (BitmapDrawable) holder.photoImageView.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-                    presenter.handleImageButtonClick(bitmap);
-                }
+            holder.photoImageView.setOnClickListener(v -> {
+                holder.photoImageView.setDrawingCacheEnabled(true);
+                BitmapDrawable drawable = (BitmapDrawable) holder.photoImageView.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                presenter.handleImageButtonClick(bitmap);
             });
         }
     }

@@ -1,18 +1,18 @@
 package com.example.retrofitagain2.searchHistory;
 
-import android.content.Context;
-
 import com.example.retrofitagain2.services.SearchHistoryService;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
+
+import javax.inject.Inject;
 
 public class SearchHistoryPresenterImpl implements SearchHistoryPresenter {
 
     private final SearchHistoryView view;
     private final SearchHistoryService searchHistoryService;
 
-    public SearchHistoryPresenterImpl(SearchHistoryActivity view) {
+    @Inject
+    public SearchHistoryPresenterImpl(SearchHistoryService searchHistoryService, SearchHistoryView view) {
+        this.searchHistoryService = searchHistoryService;
         this.view = view;
-        searchHistoryService = SearchHistoryServiceImpl.getInstance();
     }
 
     public void handleActivityOnCreate() {

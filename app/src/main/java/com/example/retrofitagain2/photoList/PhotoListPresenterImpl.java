@@ -3,30 +3,33 @@ package com.example.retrofitagain2.photoList;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosServiceListener;
 import com.example.retrofitagain2.services.PhotosService;
-import com.example.retrofitagain2.services.PhotosServiceImpl;
 import com.example.retrofitagain2.services.SearchHistoryService;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class PhotoListPresenterImpl implements PhotoListPresenter {
 
-    private static final String TAG = "PhotoListActivity";
-    private final PhotoListView view;
+    private static final String TAG = "PhotoListPresenterImpl";
     private final PhotosService photosService;
     private final SearchHistoryService searchHistoryService;
+    private final PhotoListView view;
 
-    public PhotoListPresenterImpl(PhotoListView view) {
+    @Inject
+    public PhotoListPresenterImpl(PhotosService photosService, SearchHistoryService searchHistoryService, PhotoListView view) {
+        this.photosService = photosService;
+        this.searchHistoryService = searchHistoryService;
         this.view = view;
-        photosService = new PhotosServiceImpl();
-        searchHistoryService = SearchHistoryServiceImpl.getInstance();
     }
 
     public void handleHistoryButtonClick() {
-        view.showSearchHistoryActivity(searchHistoryService);
+        view.showSearchHistoryActivity();
     }
 
     public void handleSearchViewQuery(String query) {
@@ -44,8 +47,8 @@ public class PhotoListPresenterImpl implements PhotoListPresenter {
                         }
 
                         @Override
-                        public void onFailure(String errorMsg) {
-                            view.showToast(errorMsg);
+                        public void onFailure(@NonNull Throwable t) {
+                            view.showToast(t.getMessage());
                             view.hideProgressBar();
                         }
                     }

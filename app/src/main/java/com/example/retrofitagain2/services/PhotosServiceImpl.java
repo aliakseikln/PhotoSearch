@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 
 import com.example.retrofitagain2.ApiClientFlickr;
 import com.example.retrofitagain2.ApiInterfaceFlickr;
-import com.example.retrofitagain2.MyApplication;
 import com.example.retrofitagain2.Photo;
 import com.example.retrofitagain2.PhotosResponse;
 import com.example.retrofitagain2.PhotosServiceListener;
@@ -19,15 +18,22 @@ import com.example.retrofitagain2.R;
 import java.io.File;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PhotosServiceImpl implements PhotosService {
 
-    private static final String TAG = "PhotoListActivity";
+    private static final String TAG = "PhotosServiceImpl";
+    private final Context context;
     ApiInterfaceFlickr apiInterfaceFlickr;
-    Context context = MyApplication.getContext();
+
+    @Inject
+    public PhotosServiceImpl(Context context) {
+        this.context = context;
+    }
 
     @Override
     public void fetchPhotosByQuery(String query, PhotosServiceListener photosServiceListener) {
@@ -47,7 +53,7 @@ public class PhotosServiceImpl implements PhotosService {
             @Override
             public void onFailure(@NonNull Call<PhotosResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "Error: " + t.getMessage());
-                photosServiceListener.onFailure(t.getMessage());
+                photosServiceListener.onFailure(t);
             }
         });
     }
