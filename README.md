@@ -1,13 +1,23 @@
 # PhotoSearchTest
-Search images by name application based on Flickr api.
+ Easy search images by name in the application. This application is based on Flickr api.
 
 
 
 
+## Case Study:
+* [MVP](https://www.geeksforgeeks.org/mvp-model-view-presenter-architecture-pattern-in-android-with-example/): Architectural pattern 
+  - Model - Layer for storing data. This layer is responsible for the abstraction of the data sources. Model and ViewModel work together to get and save the data.  
+  - View - User Interface layer. The purpose of this layer is to inform the ViewModel about the user’s action.
+  - Presenter - This layer fetch the data from the model and applies the UI logic to decide what to display. It exposes those data streams which are relevant to the View. Moreover, it servers as a link between the Model and the View.
+  
+  ![image](https://user-images.githubusercontent.com/48939805/186003184-17770503-0a71-4f99-9417-7f3a82a793f2.png)
+
+* [Dagger 2](https://developer.android.com/training/dependency-injection/dagger-android) - Dependency injection.
+  - Works by creating a graph of all the dependencies in the project so that it can find out where it should get those dependencies when they are needed.
+ 
 
 # Libraries and technologies used.
-- MVP : Pattern overcomes the challenges of MVC and provides an easy way to structure the project codes
-- Glide : Load and cache images by URL.
-- Mockito : It lets you write beautiful tests with a clean & simple API
-- Retrofit : Making HTTP connection with the rest API and convert reponse json file to Kotlin/Java object.
-- Dagger 2 : Compile-time framework for dependency injection.
+- [MVP](https://www.geeksforgeeks.org/mvp-model-view-presenter-architecture-pattern-in-android-with-example/) - Pattern overcomes the challenges of MVC and provides an easy way to structure the project codes
+- [Glide](https://github.com/bumptech/glide) - Load and cache images by URL.
+- [Retrofit](https://square.github.io/retrofit/) - Making HTTP connection with the rest API and convert reponse json file to Kotlin/Java object.
+- [Dagger 2](https://developer.android.com/training/dependency-injection/dagger-android) - Compile-time framework for dependency injection.
