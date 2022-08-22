@@ -1,5 +1,5 @@
 # PhotoSearchTest
- Easy search images by name in the application. This application is based on Flickr api.
+Easy search images in the simple application in your pocket. When you press on an image you will see a larger version of the image and you can download it to your gallery also this app has history of search. This application is based on Flickr api.
 
 
 
