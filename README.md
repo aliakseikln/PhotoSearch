@@ -11,7 +11,14 @@ Easy search images in the simple application in your pocket. When you press on a
   - Presenter - This layer fetch the data from the model and applies the UI logic to decide what to display. It exposes those data streams which are relevant to the View. Moreover, it servers as a link between the Model and the View.
 
 * [Dagger 2](https://developer.android.com/training/dependency-injection/dagger-android) - Dependency injection.
-  - Works by creating a graph of all the dependencies in the project so that it can find out where it should get those dependencies when they are needed.
+  - How to define modules which provides dependencies.
+  - How to define components
+  - How to defining dependency providers (object providers)
+  - How to defining dependencies (object consumers)
+  - How to connecting consumers and providers
+  - How to use scope annotations
+  - How to declare special treatment of fields in Dagger
+  
  
 
 # Libraries and technologies used.
